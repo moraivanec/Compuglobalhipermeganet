@@ -25,22 +25,22 @@ def menu():
 
         match opcion_seleccionada:
             case 1:
-                # Llamar a la función para añadir un producto
+                # Añadir un producto
                 pass
             case 2:
-                # Llamar a la función para editar un producto
+                # Editar un producto
                 pass
             case 3:
-                # Llamar a la función para eliminar un producto
+                # Eliminar un producto
                 pass
             case 4:
-                # Llamar a la función para ver el inventario actual
+                # Ver el inventario actual
                 pass
             case 5:
-                # Llamar a la función para buscar un producto por ID
+                # Buscar un producto por ID
                 pass
             case 6:
-                # Llamar a la función para generar un informe de inventario
+                # Generar informe
                 pass
             case 7:
                 print("Saliendo del programa...")
