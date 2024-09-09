@@ -1,1 +1,1 @@
-Sistema de Gestión de Inventario de una Ferretería
+Sistema de Gestión de Inventarios de una Ferretería
