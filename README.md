@@ -5,3 +5,5 @@
 
 ### Sistema de Gestión de Inventarios para una Ferretería
 Integrantes: Mora Ivanec, Sofia Lozano, Evangelina Ovelar, Selene Rosales
+
+Este programa permite registrar cada producto con un identificador único (ID), nombre, descripción, categoría y cantidad en stock. Ofrece funcionalidades como la visualización del stock actual, búsqueda de productos y generar informes de inventario. También incluye opciones para agregar, editar y eliminar ítems, proporcionando un historial claro de movimientos (entradas y salidas) de productos. 
