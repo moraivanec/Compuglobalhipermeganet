@@ -1,4 +1,4 @@
-# Sistema de Gestión de Inventario y Clientes
+# Sistema de Gestión de Inventario y Clientes de tienda de artículos computación
 
 import os
 import json as js
