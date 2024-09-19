@@ -1,3 +1,4 @@
+<!--- csv -->
 ID,Nombre,Precio
 1,Monitor LED 24",250.00
 2,Teclado Gamer Wireless,120.00
@@ -48,3 +49,54 @@ ID,Nombre,Precio
 47,Laptop HP ZBook 15,1500.00
 48,Tarjeta Gráfica NVIDIA Tesla,600.00
 49,Fuente de Poder 1500W,300.00
+50,Cámara Web Logitech C922,50.00
+51,Tablet Apple iPad mini,200.00
+52,Monitor Curvo 40",600.00
+53,Teclado Inalámbrico Logitech,35.00
+54,Procesador Intel Core i5,300.00
+55,Memoria RAM 512GB DDR4,1500.00
+56,Disco Duro Interno 8TB,500.00
+57,Laptop Lenovo ThinkPad P,1800.00
+58,Tarjeta Gráfica AMD Radeon RX,400.00
+59,Fuente de Poder 1800W,350.00
+60,Cámara Web Razer Kiyo Pro,70.00
+61,Tablet Samsung Galaxy Tab A,250.00
+62,Monitor LED 40",450.00
+63,Teclado Gamer Razer Ornata,220.00
+64,Procesador AMD Ryzen Threadripper,1000.00
+65,Memoria RAM 1TB DDR4,2500.00
+66,Disco Duro Externo 8TB,350.00
+67,Laptop Dell Alienware,2000.00
+68,Tarjeta Gráfica NVIDIA GeForce RTX,800.00
+69,Fuente de Poder 2000W,400.00
+70,Cámara Web Logitech C930,60.00
+71,Tablet Apple iPad Air 2,350.00
+72,Monitor Curvo 43",700.00
+73,Teclado Inalámbrico Microsoft,40.00
+74,Procesador Intel Core i3,200.00
+75,Memoria RAM 2TB DDR4,4000.00
+76,Disco Duro Interno 16TB,800.00
+77,Laptop HP Envy 17,2500.00
+78,Tarjeta Gráfica AMD Radeon Pro WX,500.00
+79,Fuente de Poder 2500W,500.00
+80,Cámara Web Razer Seiren X,80.00
+81,Tablet Samsung Galaxy Tab S2,300.00
+82,Monitor LED 43",500.00
+83,Teclado Gamer Corsair K95,280.00
+84,Procesador AMD Ryzen 5 Pro,400.00
+85,Memoria RAM 4TB DDR4,6000.00
+86,Disco Duro Externo 16TB,500.00
+87,Laptop Lenovo ThinkPad X1,3000.00
+88,Tarjeta Gráfica NVIDIA Quadro RTX,1000.00
+89,Fuente de Poder 3000W,600.00
+90,Cámara Web Logitech C922 Pro,70.00
+91,Tablet Apple iPad Pro 11,800.00
+92,Monitor Curvo 49",900.00
+93,Teclado Inalámbrico Logitech,45.00
+94,Procesador Intel Core i7 Pro,700.00
+95,Memoria RAM 8TB DDR4,10000.00
+96,Disco Duro Interno 32TB,1200.00
+97,Laptop Dell Inspiron 17,3500.00
+98,Tarjeta Gráfica AMD Radeon RX 6800,600.00
+99,Fuente de Poder 3500W,700.00
+100,Cámara Web Razer Kiyo Pro Max,100.00
