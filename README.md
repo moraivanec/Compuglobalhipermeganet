@@ -32,3 +32,7 @@ Ofrece funcionalidades como la visualización del stock actual, búsqueda de pro
 ### Archivos JSON
 - Registro de ventas
 - Registro de stock (ID,cantidad, entrada de productos)
+
+### Pantallas
+
+https://www.figma.com/design/4xaiaS6b9sgWbQXlIfJfao/Proyecto---AyED1?node-id=0-1&node-type=canvas&t=BDxNCCSNVqy0Fz3d-0
