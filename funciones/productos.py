@@ -1,4 +1,4 @@
-def cargar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> None:
+def agregar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> None:
     """
     Contrato:
     - Carga un nuevo producto en la lista de productos y actualiza el stock.
@@ -12,10 +12,16 @@ def cargar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> N
     - El stock es actualizado adecuadamente.
     """
     try:
+        id_producto = input("Ingrese el ID del producto: ")
+        nombre_producto = input("Ingrese el nombre del producto")
+        precio = input("Ingrese el precio del producto: ")
+        
+        # Verifico que los datos no estén vacíos
         assert id_producto != "", "El ID del producto no puede estar vacío."
         assert nombre_producto != "", "El nombre del producto no puede estar vacío."
         assert precio != "", "El precio del producto no puede estar vacío."
         
+        # Verifico el formato de los datos
         if not re.match(r"^\d+$", id_producto):
             print("El ID sólo puede tener números.")
             return
@@ -27,7 +33,8 @@ def cargar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> N
         if not re.match(r"^(0|[1-9]\d*)(\.\d{1,2})?$", precio):
             print("El precio tiene que ser un número positivo que incluya hasta dos decimales.")
             return
-            
+        
+        precio = float(precio) # Cambio precio a float para asegurarme garantizan que los datos ingresados sean números válidos
         if precio <= 0:
             print("El precio tiene que ser un número positivo.")
             return
@@ -38,10 +45,9 @@ def cargar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> N
             "precio": precio
         }
         
+        # Agrego el nuevo producto a la lista de productos y actualizo el stock
         productos.append(nuevo_producto)
-        
-        # Inicio el stock en 0 si no existe
-        stock[id] = stock.get(id, 0)
+        stock[id_producto] = stock.get(id_producto, 0) # Inicio el stock en 0 si no existe
         print("¡Producto cargado exitosamente!")
         
     except ValueError as e:
@@ -62,48 +68,63 @@ def editar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> N
     - El stock del producto también puede ser actualizado si es necesario.
     """
     try:
+        id_producto = input("Ingrese el ID del producto a editar: ")
+        
+        # Verifico que el id no esté vacío
         assert id != "", "El ID del producto no puede estar vacío."
         
-        producto_encontrado = False
+        # Busco el producto en la lista
+        producto_encontrado = None
         for producto in productos:
             if producto["id"] == id_producto:
-                producto_encontrado = True
+                producto_encontrado = producto
+                break
                 
         assert producto_encontrado, "Producto no encontrado"
+        
+        nuevo_id = input("Ingrese el nuevo ID del producto: ")
+        nuevo_nombre = input("Ingrese el nuevo nombre del producto: ")
+        nuevo_precio = input("Ingrese el nuevo precio del producto: ")
+        
+        # Verifico que los nuevos datos no estén vacíos
+        assert nuevo_id != "", "El nuevo ID del producto no puede estar vacío."
+        assert nuevo_nombre != "", "El nuevo nombre del producto no puede estar vacío."
+        assert nuevo_precio != "", "El nuevo precio del producto no puede estar vacío."
+        
+        # Verifico el formato de los nuevos datos
+        if not re.match(r"^\d+$", nuevo_id):
+            print("El nuevo ID sólo puede tener números.")
+            return
                 
-                assert id_producto_editado != "", "El nuevo ID del producto no puede estar vacío."
-                assert nombre_producto_editado != "", "El nuevo nombre del producto no puede estar vacío."
-                assert precio_editado != "", "El nuevo precio del producto no puede estar vacío."
+        if not re.match(r"^[A-Za-z\s]+$", nuevo_nombre):
+            print("El nuevo nombre solo puede tener letras y espacios.")
+            return
                 
-                if not re.match(r"^\d+$", id_producto_editado):
-                    print("El nuevo ID sólo puede tener números.")
-                    return
+        if not re.match(r"^(0|[1-9]\d*)(\.\d{1,2})?$", nuevo_precio):
+            print("El nuevo precio tiene que ser un número positivo que incluya hasta dos decimales.")
+            return
                 
-                if not re.match(r"^[A-Za-z\s]+$", nombre_producto_editado):
-                    print("El nuevo nombre solo puede tener letras y espacios.")
-                    return
+        nuevo_precio = float(nuevo_precio) # Cambio precio a float para asegurarme garantizan que los datos ingresados sean números válidos
+        if nuevo_precio <= 0:
+            print("El precio tiene que ser un número positivo.")
+            return
                 
-                if not re.match(r"^(0|[1-9]\d*)(\.\d{1,2})?$", precio_editado):
-                    print("El nuevo precio tiene que ser un número positivo que incluya hasta dos decimales.")
-                    return
+        # Actualizo el stock solo si el ID del producto se cambia
+        if id_producto != nuevo_id:
+            stock[nuevo_id] = stock.pop(id_producto, 0) # Muevo el stock del ID anterior al nuevo
                 
-                if precio <= 0:
-                    print("El precio tiene que ser un número positivo.")
-                    return
+        producto["id"] = nuevo_id
+        producto["nombre"] = nuevo_nombre
+        producto["precio"] = nuevo_precio
                 
-                # Actualizo el stock solo si el ID del producto se cambia
-                if id_producto != id_producto_editado:
-                    stock[id_producto_editado] = stock.pop(id_producto, 0) # Muevo el stock del ID anterior al nuevo
-                
-                producto["id"] = id_producto_editado
-                producto["nombre"] = nombre_producto_editado
-                producto["precio"] = precio_editado
-                
-                print("¡Producto editado exitosamente!")
-                break
+        print("¡Producto editado exitosamente!")
             
-    except ValueError as e:
+    except AssertionError as e:
         print(f"Error: {e}")
+    except ValueError:
+        print("Error en los datos proporcionados.")
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
                 
 
 def eliminar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> None:
@@ -120,21 +141,29 @@ def eliminar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) ->
     - El stock del producto también es eliminado.
     """
     try:
+        id_producto = input("Ingrese el ID del producto a eliminar: ")
+        
+        # Verifico que el id no esté vacío
         assert id_producto != "", "El ID del producto no puede estar vacío."
         
-        producto_encontrado = False
+        # Busco el producto en la lista
+        producto_encontrado = None
         for producto in productos:
             if producto["id"] == id_producto:
-                producto_encontrado = True
-                productos.remove(producto)  # Eliminar el producto de la lista
-                print("¡Producto eliminado exitosamente!")
+                producto_encontrado = producto
                 break
-        
+            
         assert producto_encontrado, "Producto no encontrado."
-    
-    except ValueError as e:
+        
+        productos.remove(producto_encontrado)  # Elimina el producto de la lista
+        stock.pop(id_producto, None) # Elimina el stock del producto
+        print("¡Producto eliminado exitosamente!")
+        
+    except AssertionError as e:
         print(f"Error: {e}")
-
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
+        
 
 def consultar_lista_productos() -> None:
     """

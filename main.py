@@ -1,5 +1,6 @@
 import os
-import json as js
+import json 
+import re
 from os import system, name
 from tabulate import tabulate
 from typing import List, Dict, Any
@@ -17,11 +18,9 @@ def limpiar_pantalla() -> None:
     Postcondiciones:
     - La pantalla de la consola se limpia.
     """
-    if name == "nt":
-        # Windows
+    if name == "nt": # Windows
         system("cls")
-    else:
-        # Linux y Mac
+    else: # Linux y Mac
         system("clear")
         
 
@@ -55,10 +54,13 @@ def seleccionar_opcion(opciones: List[str]) -> int:
     - Si la opción está fuera del rango continúa solicitando al usuario hasta que se elija una opción válida.
     """
     while True:
-        opcion = int(input("\nSeleccione una opción: "))
-        if 0 <= opcion <= len(opciones):
-            return opcion
-        print("Por favor, elija una opción válida.")
+        try:
+            opcion = int(input("\nSeleccione una opción: "))
+            if 0 <= opcion <= len(opciones):
+                return opcion
+            print("Por favor, elija una opción válida.")
+        except ValueError:
+            print("Por favor, ingrese un número.")
 
 def main() -> None:
     """
@@ -113,16 +115,16 @@ def main() -> None:
                 pr.consultar_lista_productos(productos)
             case 5:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.agregar_cliente(clientes)
+                cl.agregar_cliente(clientes, "clientes.json")
             case 6:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.editar_cliente(clientes)
+                cl.editar_cliente(clientes, "clientes.json")
             case 7:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.eliminar_cliente(clientes)
+                cl.eliminar_cliente(clientes, "clientes.json")
             case 8:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.consultar_lista_clientes(clientes)
+                cl.consultar_lista_clientes("clientes.json")
             case 9:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
                 st.registrar_venta(ventas, stock)
@@ -131,10 +133,10 @@ def main() -> None:
                 st.inventario_actual(stock)
             case 11:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                st.registrar_entradas(stock)
+                st.registrar_entradas(stock, "entradas.json")
             case 12:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                st.registrar_salidas(ventas)
+                st.registrar_salidas(ventas, "salidas.json")
 
 if __name__ == "__main__":
     main()
