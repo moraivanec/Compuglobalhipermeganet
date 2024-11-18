@@ -44,8 +44,8 @@ def cargar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> N
         stock[id] = stock.get(id, 0)
         print("¡Producto cargado exitosamente!")
         
-    except ValueError:
-        print("Error!")
+    except ValueError as e:
+        print(f"Error: {e}")
         
 
 def editar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> None:
@@ -102,8 +102,8 @@ def editar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> N
                 print("¡Producto editado exitosamente!")
                 break
             
-    except ValueError:
-        print("Error!")
+    except ValueError as e:
+        print(f"Error: {e}")
                 
 
 def eliminar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) -> None:
@@ -132,19 +132,42 @@ def eliminar_producto(productos: List[Dict[str, Any]], stock: Dict[str, int]) ->
         
         assert producto_encontrado, "Producto no encontrado."
     
-    except ValueError:
-        print("Error!")
+    except ValueError as e:
+        print(f"Error: {e}")
+
 
 def consultar_lista_productos() -> None:
-  """
-  Contrato:
-  - Consulta y muestra la lista de productos disponibles.
-  
-  Precondiciones:
-  - Ninguna.
-  
-  Postcondiciones:
-  - Si la lista "productos" está vacía, se imprime en la consola un mensaje indicando que no hay productos registrados.
-  - Si hay productos en la lista, se imprime en la consola una tabla con los detalles de cada producto: ID, Nombre y Precio.
     """
-    print("Lo sentimos, esta función no está implementada. Intente más tarde.")
+    Contrato:
+    - Consulta y muestra la lista de productos disponibles.
+    
+    Precondiciones:
+    - Ninguna.
+    
+    Postcondiciones:
+    - Si la lista "productos" está vacía, se imprime en la consola un mensaje indicando que no hay productos registrados.
+    - Si hay productos en la lista, se imprime en la consola una tabla con los detalles de cada producto: ID, Nombre y Precio.
+    """
+    separador = ';'
+    try:
+        with open('productos.csv', 'rt', encoding = 'utf-8') as archivo:
+            for linea in archivo: # Método iterando (lectura línea por línea) elementos del archivo
+                id_producto, nombre, precio = linea.rstrip().split(separador)
+                productos.append({"ID": id_producto, "Nombre": nombre, "Precio": precio})
+
+        if not productos:
+            print("No hay productos registrados.")
+        else:
+            encabezados = ["ID", "Nombre", "Precio"]
+            print(tabulate(productos, headers = encabezados, tablefmt = "grid")) # Formateo la salida usando tabulate
+
+    except FileNotFoundError as msg:
+        print(f'No se encuentra el archivo: {msg}')
+    except OSError as msg:
+        print(f'No se puede leer el archivo: {msg}')
+    except Exception as e:
+        print(f'Error en los datos: {e}')
+        
+
+
+

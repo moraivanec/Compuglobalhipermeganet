@@ -89,6 +89,8 @@ def main() -> None:
     stock: Dict[str, int] = {}
     ventas: List[Dict[str, Any]] = []
     clientes: List[Dict[str, Any]] = []
+    entradas = []
+    salidas = []
 
     while True:
         mostrar_menu(opciones)
