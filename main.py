@@ -1,10 +1,9 @@
 import os
-import json 
-import re
+import json as js
 from os import system, name
 from tabulate import tabulate
 from typing import List, Dict, Any
-from funciones import clientes as cl, productos as pr, stock as st
+from funciones import clientes as cl, productos as pr, stock as st, ventas as vt 
 
 def limpiar_pantalla() -> None:
     """
@@ -18,9 +17,11 @@ def limpiar_pantalla() -> None:
     Postcondiciones:
     - La pantalla de la consola se limpia.
     """
-    if name == "nt": # Windows
+    if name == "nt":
+        # Windows
         system("cls")
-    else: # Linux y Mac
+    else:
+        # Linux y Mac
         system("clear")
         
 
@@ -56,11 +57,11 @@ def seleccionar_opcion(opciones: List[str]) -> int:
     while True:
         try:
             opcion = int(input("\nSeleccione una opción: "))
-            if 0 <= opcion <= len(opciones):
+            if 0 <= opcion < len(opciones):
                 return opcion
             print("Por favor, elija una opción válida.")
         except ValueError:
-            print("Por favor, ingrese un número.")
+            print("Entrada no válida. Por favor, ingrese un número entero.")
 
 def main() -> None:
     """
@@ -73,6 +74,7 @@ def main() -> None:
     Postcondiciones:
     - No tiene parámetros de retorno.
     """
+    productos =[]
     opciones = [
         "Añadir producto",
         "Editar producto",
@@ -87,13 +89,15 @@ def main() -> None:
         "Informe de entradas",
         "Informe de salidas",
     ]
-    productos: List[Dict[str, Any]] = []
+
+    movimientos =[]
+    stock_productos_csv = 'stock_productos_csv.csv'
+    st.escribir_csv(productos, stock_productos_csv)
+
+    productos: List[Dict[str, Any]] = st.cargar_stock(stock_productos_csv)
     stock: Dict[str, int] = {}
     ventas: List[Dict[str, Any]] = []
     clientes: List[Dict[str, Any]] = []
-    entradas = []
-    salidas = []
-
     while True:
         mostrar_menu(opciones)
         opcion = seleccionar_opcion(opciones)
@@ -103,40 +107,50 @@ def main() -> None:
                 break
             case 1:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                pr.agregar_producto(productos, stock)
+                nuevo_producto = {}
+                nuevo_producto['id'] = input("Ingrese el ID del producto: ")
+                nuevo_producto['nombre'] = input("Ingrese el nombre del producto: ")
+                nuevo_producto['precio'] = float(input("Ingrese el precio del producto: "))
+                nuevo_producto['cantidad'] = int(input("Ingrese la cantidad del producto: "))
+
+                """
+                Llamamos a la función para cargar el producto
+                """
+                pr.cargar_producto(productos, stock, nuevo_producto, movimientos), st.escribir_csv(productos, stock_productos_csv)
             case 2:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                pr.editar_producto(productos, stock)
+                pr.editar_producto(productos, stock), st.escribir_csv(productos, stock_productos_csv)
             case 3:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                pr.eliminar_producto(productos, stock)
+                pr.eliminar_producto(productos, stock), st.escribir_csv(productos, stock_productos_csv)
             case 4:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                pr.consultar_lista_productos(productos)
+                pr.consultar_lista_productos(productos, stock_productos_csv)
             case 5:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.agregar_cliente(clientes, "clientes.json")
+                cl.agregar_cliente(clientes)
             case 6:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.editar_cliente(clientes, "clientes.json")
+                cl.editar_cliente(clientes)
             case 7:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.eliminar_cliente(clientes, "clientes.json")
+                cl.eliminar_cliente(clientes)
             case 8:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                cl.consultar_lista_clientes("clientes.json")
+                cl.consultar_lista_clientes(clientes)
             case 9:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                st.registrar_venta(ventas, stock)
+                vt.registrar_venta(ventas, stock)
             case 10:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
                 st.inventario_actual(stock)
             case 11:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                st.registrar_entradas(stock, "entradas.json")
+                st.registrar_entradas(stock)
+                print(movimientos)
             case 12:
                 print(f"Has seleccionado la opción: {opciones[opcion - 1]}")
-                st.registrar_salidas(ventas, "salidas.json")
+                st.registrar_salidas(ventas)
 
 if __name__ == "__main__":
     main()
